@@ -134,6 +134,76 @@ if (!defined('ABSPATH')) {
     border-color: rgba(22, 163, 74, 0.5);
 }
 
+/* Navigation Tabs */
+.ezit-nav-wrapper {
+    background: #1a1f26;
+    border-bottom: 2px solid rgba(163, 230, 53, 0.2);
+    padding: 0 32px;
+}
+
+.ezit-light .ezit-nav-wrapper {
+    background: #ffffff;
+    border-bottom: 2px solid rgba(22, 163, 74, 0.2);
+}
+
+.ezit-nav-tabs {
+    display: flex;
+    gap: 8px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.ezit-nav-tab {
+    padding: 14px 20px;
+    color: #dbdbdb;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.ezit-light .ezit-nav-tab {
+    color: #4b5563;
+}
+
+.ezit-nav-tab:hover {
+    color: #a3e635;
+    background: rgba(163, 230, 53, 0.05);
+}
+
+.ezit-nav-tab:focus,
+.ezit-nav-tab:active {
+    color: #a3e635 !important;
+    outline: none !important;
+}
+
+.ezit-nav-tab-active {
+    color: #a3e635;
+    border-bottom-color: #a3e635;
+    background: rgba(163, 230, 53, 0.1);
+}
+
+.ezit-light .ezit-nav-tab:hover {
+    color: #16a34a;
+    background: rgba(22, 163, 74, 0.05);
+}
+
+.ezit-light .ezit-nav-tab:focus,
+.ezit-light .ezit-nav-tab:active {
+    color: #16a34a !important;
+    outline: none !important;
+}
+
+.ezit-light .ezit-nav-tab-active {
+    color: #16a34a;
+    border-bottom-color: #16a34a;
+    background: rgba(22, 163, 74, 0.1);
+}
+
 /* Content */
 .ezit-content {
     max-width: 1400px;

@@ -87,28 +87,15 @@ class CMP_Admin {
             );
         }
         
-        // Add Chalkboard Menu Pro as submenu (only if parent exists)
-        if ($parent_exists) {
-            add_submenu_page(
-                $parent_slug,
-                __('Chalkboard Menu Pro', 'chalkboard-menu-pro'),
-                __('Chalkboard Menu', 'chalkboard-menu-pro'),
-                'manage_options',
-                'chalkboard-menu-pro',
-                [__CLASS__, 'render_page']
-            );
-        } else {
-            // If parent doesn't exist, create top-level menu
-            add_menu_page(
-                __('Chalkboard Menu Pro', 'chalkboard-menu-pro'),
-                __('Chalkboard Menu', 'chalkboard-menu-pro'),
-                'manage_options',
-                'chalkboard-menu-pro',
-                [__CLASS__, 'render_page'],
-                'dashicons-welcome-widgets-menus',
-                30
-            );
-        }
+        // Always add Chalkboard Menu Pro as submenu under Ez IT Solutions
+        add_submenu_page(
+            $parent_slug,
+            __('Chalkboard Menu Pro', 'chalkboard-menu-pro'),
+            __('Chalkboard Menu', 'chalkboard-menu-pro'),
+            'manage_options',
+            'chalkboard-menu-pro',
+            [__CLASS__, 'render_page']
+        );
     }
     
     /**
@@ -116,7 +103,7 @@ class CMP_Admin {
      */
     public static function enqueue_assets($hook) {
         // Only load on our admin pages
-        if ($hook !== 'ez-it-solutions_page_chalkboard-menu-pro') {
+        if (strpos($hook, 'chalkboard-menu-pro') === false) {
             return;
         }
         
