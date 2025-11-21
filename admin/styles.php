@@ -649,8 +649,6 @@ if (!defined('ABSPATH')) {
     border-color: rgba(163, 230, 53, 0.6);
     color: inherit !important;
     text-decoration: none !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(163, 230, 53, 0.3);
 }
 
 .ezit-sidebar-doc-btn:hover *,
@@ -674,7 +672,6 @@ if (!defined('ABSPATH')) {
 .ezit-light .ezit-sidebar-doc-btn:hover {
     background: rgba(22, 163, 74, 0.25);
     border-color: rgba(22, 163, 74, 0.6);
-    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
 }
 
 .ezit-light .ezit-sidebar-doc-btn:hover,
