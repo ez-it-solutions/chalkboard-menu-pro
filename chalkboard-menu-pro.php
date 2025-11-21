@@ -60,9 +60,12 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 			add_action( 'init', array( $this, 'register_post_types' ) );
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_assets' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_assets' ) );
-			add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
 			add_shortcode( 'chalkboard_menu_pro', array( $this, 'render_chalkboard_menu_shortcode' ) );
+			
+			// Initialize admin interface
+			if ( is_admin() ) {
+				CMP_Admin::init();
+			}
 		}
 
 		/**
@@ -70,6 +73,17 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 		 */
 		protected function includes() {
 			require_once CMP_PLUGIN_DIR . 'includes/meta-boxes.php';
+			
+			// Load admin class
+			if ( is_admin() ) {
+				require_once CMP_PLUGIN_DIR . 'admin/class-cmp-admin.php';
+			}
+			
+			// Load company info if available
+			if ( file_exists( CMP_PLUGIN_DIR . 'includes/class-company-info.php' ) ) {
+				require_once CMP_PLUGIN_DIR . 'includes/class-company-info.php';
+				EZIT_Company_Info::init();
+			}
 		}
 
 		/**
@@ -147,133 +161,6 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 			// Styles are only enqueued when the shortcode is used via wp_enqueue_style in the renderer.
 		}
 
-		/**
-		 * Register and enqueue admin assets for the plugin dashboard screens.
-		 */
-		public function register_admin_assets( $hook ) {
-			// Basic guard to only load assets on this plugin's pages.
-			if ( false === strpos( $hook, 'chalkboard-menu-pro' ) ) {
-				return;
-			}
-
-			wp_enqueue_style(
-				'cmp-admin',
-				CMP_PLUGIN_URL . 'assets/css/admin.css',
-				array(),
-				CMP_PLUGIN_VERSION
-			);
-
-			wp_enqueue_script(
-				'cmp-admin',
-				CMP_PLUGIN_URL . 'assets/js/admin.js',
-				array( 'jquery' ),
-				CMP_PLUGIN_VERSION,
-				true
-			);
-		}
-
-		/**
-		 * Register the admin menu for Chalkboard Menu Pro.
-		 *
-		 * If the Ez IT Solutions parent menu exists, attach as submenu.
-		 * Otherwise, create a standalone top-level menu.
-		 */
-		public function register_admin_menu() {
-			global $menu;
-
-			$parent_slug = apply_filters( 'cmp_parent_menu_slug', 'ez-it-solutions' );
-			$parent_exists = false;
-
-			// Check if parent menu exists.
-			if ( ! empty( $menu ) ) {
-				foreach ( $menu as $item ) {
-					if ( isset( $item[2] ) && $item[2] === $parent_slug ) {
-						$parent_exists = true;
-						break;
-					}
-				}
-			}
-
-			if ( $parent_exists ) {
-				// Attach as submenu under Ez IT Solutions.
-				add_submenu_page(
-					$parent_slug,
-					__( 'Chalkboard Menu Pro', 'chalkboard-menu-pro' ),
-					__( 'Chalkboard Menu', 'chalkboard-menu-pro' ),
-					'manage_options',
-					'chalkboard-menu-pro',
-					array( $this, 'render_admin_page' )
-				);
-
-				add_submenu_page(
-					$parent_slug,
-					__( 'Chalkboard Menu Items', 'chalkboard-menu-pro' ),
-					__( 'Menu Items', 'chalkboard-menu-pro' ),
-					'manage_options',
-					'edit.php?post_type=cmp_menu_item'
-				);
-			} else {
-				// Create standalone top-level menu.
-				add_menu_page(
-					__( 'Chalkboard Menu Pro', 'chalkboard-menu-pro' ),
-					__( 'Chalkboard Menu', 'chalkboard-menu-pro' ),
-					'manage_options',
-					'chalkboard-menu-pro',
-					array( $this, 'render_admin_page' ),
-					'dashicons-welcome-widgets-menus',
-					60
-				);
-
-				add_submenu_page(
-					'chalkboard-menu-pro',
-					__( 'Chalkboard Menu Items', 'chalkboard-menu-pro' ),
-					__( 'Menu Items', 'chalkboard-menu-pro' ),
-					'manage_options',
-					'edit.php?post_type=cmp_menu_item'
-				);
-			}
-		}
-
-		/**
-		 * Render the main admin dashboard page.
-		 *
-		 * This page will evolve into a tabbed interface with light/dark mode,
-		 * drag-and-drop builders, and presets. For now it acts as a branded
-		 * landing page with basic usage instructions.
-		 */
-		public function render_admin_page() {
-			?>
-			<div class="cmp-admin-wrap cmp-theme-light" id="cmp-admin-root">
-				<header class="cmp-admin-header">
-					<h1><?php esc_html_e( 'Chalkboard Menu Pro', 'chalkboard-menu-pro' ); ?></h1>
-					<p class="cmp-admin-tagline"><?php esc_html_e( 'Create beautiful chalkboard-style menus for your cafe, restaurant, or bar.', 'chalkboard-menu-pro' ); ?></p>
-					<div class="cmp-admin-header-actions">
-						<button type="button" class="button cmp-theme-toggle" id="cmp-theme-toggle">
-							<span class="cmp-theme-toggle-label-light"><?php esc_html_e( 'Light', 'chalkboard-menu-pro' ); ?></span>
-							<span class="cmp-theme-toggle-handle"></span>
-							<span class="cmp-theme-toggle-label-dark"><?php esc_html_e( 'Dark', 'chalkboard-menu-pro' ); ?></span>
-						</button>
-					</div>
-				</header>
-
-				<div class="cmp-admin-content">
-					<div class="cmp-admin-panel cmp-admin-panel-primary">
-						<h2><?php esc_html_e( 'Getting Started', 'chalkboard-menu-pro' ); ?></h2>
-						<ol class="cmp-admin-steps">
-							<li><?php esc_html_e( 'Use the shortcode [chalkboard_menu_pro] in any page or post.', 'chalkboard-menu-pro' ); ?></li>
-							<li><?php esc_html_e( 'Preview the sample chalkboard layout based on the default style.', 'chalkboard-menu-pro' ); ?></li>
-							<li><?php esc_html_e( 'Return here as we add layout presets, item builders, and drag-and-drop controls.', 'chalkboard-menu-pro' ); ?></li>
-						</ol>
-					</div>
-
-					<aside class="cmp-admin-panel cmp-admin-panel-secondary">
-						<h3><?php esc_html_e( 'Ez IT Solutions Plugins', 'chalkboard-menu-pro' ); ?></h3>
-						<p><?php esc_html_e( 'This plugin follows the same clean dashboard styling and light/dark modes used across Ez IT Solutions products.', 'chalkboard-menu-pro' ); ?></p>
-					</aside>
-				</div>
-			</div>
-			<?php
-		}
 
 		/**
 		 * Render the [chalkboard_menu_pro] shortcode output.
