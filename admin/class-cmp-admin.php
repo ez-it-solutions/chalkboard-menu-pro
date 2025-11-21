@@ -66,33 +66,28 @@ class CMP_Admin {
             );
         }
         
-        // Add Chalkboard Menu Pro as submenu
-        add_submenu_page(
-            $parent_slug,
-            __('Chalkboard Menu Pro', 'chalkboard-menu-pro'),
-            __('Chalkboard Menu', 'chalkboard-menu-pro'),
-            'manage_options',
-            'chalkboard-menu-pro',
-            [__CLASS__, 'render_page']
-        );
-        
-        // Add Boards submenu
-        add_submenu_page(
-            $parent_slug,
-            __('Chalkboard Boards', 'chalkboard-menu-pro'),
-            __('Boards', 'chalkboard-menu-pro'),
-            'manage_options',
-            'edit.php?post_type=cmp_board'
-        );
-        
-        // Add Menu Items submenu
-        add_submenu_page(
-            $parent_slug,
-            __('Chalkboard Menu Items', 'chalkboard-menu-pro'),
-            __('Menu Items', 'chalkboard-menu-pro'),
-            'manage_options',
-            'edit.php?post_type=cmp_menu_item'
-        );
+        // Add Chalkboard Menu Pro as submenu (only if parent exists)
+        if ($parent_exists) {
+            add_submenu_page(
+                $parent_slug,
+                __('Chalkboard Menu Pro', 'chalkboard-menu-pro'),
+                __('Chalkboard Menu', 'chalkboard-menu-pro'),
+                'manage_options',
+                'chalkboard-menu-pro',
+                [__CLASS__, 'render_page']
+            );
+        } else {
+            // If parent doesn't exist, create top-level menu
+            add_menu_page(
+                __('Chalkboard Menu Pro', 'chalkboard-menu-pro'),
+                __('Chalkboard Menu', 'chalkboard-menu-pro'),
+                'manage_options',
+                'chalkboard-menu-pro',
+                [__CLASS__, 'render_page'],
+                'dashicons-welcome-widgets-menus',
+                30
+            );
+        }
     }
     
     /**
