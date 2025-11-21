@@ -627,6 +627,37 @@ if (!defined('ABSPATH')) {
     color: #15803d !important;
 }
 
+/* Help Button */
+.ezit-help-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    margin-bottom: 12px;
+}
+
+.ezit-help-btn:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.ezit-help-btn .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
 /* Footer */
 .ezit-footer {
     background: #0b0f12;
@@ -691,19 +722,12 @@ if (!defined('ABSPATH')) {
     padding-top: 20px;
     margin-top: 20px;
     text-align: center;
+    color: #9ca3af;
+    font-size: 13px;
 }
 
 .ezit-light .ezit-footer-bottom {
     border-top-color: rgba(22, 163, 74, 0.2);
-}
-
-.ezit-footer-bottom p {
-    color: #9ca3af;
-    font-size: 13px;
-    margin: 0;
-}
-
-.ezit-light .ezit-footer-bottom p {
     color: #6b7280;
 }
 

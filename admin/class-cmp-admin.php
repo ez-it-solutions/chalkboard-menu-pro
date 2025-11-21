@@ -234,7 +234,7 @@ class CMP_Admin {
                     </div>
                 </div>
                 <div class="ezit-footer-bottom">
-                    <p>&copy; <?php echo date('Y'); ?> Ez IT Solutions. All rights reserved.</p>
+                    &copy; <?php echo date('Y'); ?> Ez IT Solutions. All rights reserved.
                 </div>
             </div>
         </div>
@@ -307,7 +307,7 @@ class CMP_Admin {
             <p style="color: #9ca3af; font-size: 13px; line-height: 1.6; margin-bottom: 12px;">
                 <?php _e('Find answers in our documentation', 'chalkboard-menu-pro'); ?>
             </p>
-            <a href="https://www.ez-it-solutions.com/docs/chalkboard-menu-pro" target="_blank" class="ezit-btn" style="width: 100%; justify-content: center; margin-bottom: 12px;">
+            <a href="https://www.ez-it-solutions.com/docs/chalkboard-menu-pro" target="_blank" class="ezit-help-btn">
                 <span class="dashicons dashicons-book"></span>
                 <?php _e('View Documentation', 'chalkboard-menu-pro'); ?>
             </a>
