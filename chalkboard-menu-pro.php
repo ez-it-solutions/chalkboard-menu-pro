@@ -56,11 +56,45 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 		protected function __construct() {
 			$this->define_constants();
 
+			add_action( 'init', array( $this, 'register_post_types' ) );
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_assets' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_assets' ) );
 			add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
 			add_shortcode( 'chalkboard_menu_pro', array( $this, 'render_chalkboard_menu_shortcode' ) );
+		}
+
+		/**
+		 * Register custom post types for boards and menu items.
+		 */
+		public function register_post_types() {
+			register_post_type(
+				'cmp_board',
+				array(
+					'labels'      => array(
+						'name'          => __( 'Chalkboard Boards', 'chalkboard-menu-pro' ),
+						'singular_name' => __( 'Chalkboard Board', 'chalkboard-menu-pro' ),
+					),
+					'public'      => false,
+					'show_ui'     => true,
+					'show_in_menu'=> false,
+					'supports'    => array( 'title' ),
+				)
+			);
+
+			register_post_type(
+				'cmp_menu_item',
+				array(
+					'labels'      => array(
+						'name'          => __( 'Chalkboard Menu Items', 'chalkboard-menu-pro' ),
+						'singular_name' => __( 'Chalkboard Menu Item', 'chalkboard-menu-pro' ),
+					),
+					'public'      => false,
+					'show_ui'     => true,
+					'show_in_menu'=> false,
+					'supports'    => array( 'title' ),
+				)
+			);
 		}
 
 		/**
@@ -120,20 +154,37 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 				array(),
 				CMP_PLUGIN_VERSION
 			);
+
+			wp_enqueue_script(
+				'cmp-admin',
+				CMP_PLUGIN_URL . 'assets/js/admin.js',
+				array( 'jquery' ),
+				CMP_PLUGIN_VERSION,
+				true
+			);
 		}
 
 		/**
 		 * Register the top-level admin menu for Chalkboard Menu Pro.
 		 */
 		public function register_admin_menu() {
-			add_menu_page(
+			$parent_slug = apply_filters( 'cmp_parent_menu_slug', 'ez-it-solutions' );
+
+			add_submenu_page(
+				$parent_slug,
 				__( 'Chalkboard Menu Pro', 'chalkboard-menu-pro' ),
 				__( 'Chalkboard Menu', 'chalkboard-menu-pro' ),
 				'manage_options',
 				'chalkboard-menu-pro',
-				array( $this, 'render_admin_page' ),
-				'dashicons-welcome-widgets-menus',
-				60
+				array( $this, 'render_admin_page' )
+			);
+
+			add_submenu_page(
+				$parent_slug,
+				__( 'Chalkboard Menu Items', 'chalkboard-menu-pro' ),
+				__( 'Menu Items', 'chalkboard-menu-pro' ),
+				'manage_options',
+				'edit.php?post_type=cmp_menu_item'
 			);
 		}
 
@@ -146,10 +197,17 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 		 */
 		public function render_admin_page() {
 			?>
-			<div class="cmp-admin-wrap cmp-theme-light">
+			<div class="cmp-admin-wrap cmp-theme-light" id="cmp-admin-root">
 				<header class="cmp-admin-header">
 					<h1><?php esc_html_e( 'Chalkboard Menu Pro', 'chalkboard-menu-pro' ); ?></h1>
 					<p class="cmp-admin-tagline"><?php esc_html_e( 'Create beautiful chalkboard-style menus for your cafe, restaurant, or bar.', 'chalkboard-menu-pro' ); ?></p>
+					<div class="cmp-admin-header-actions">
+						<button type="button" class="button cmp-theme-toggle" id="cmp-theme-toggle">
+							<span class="cmp-theme-toggle-label-light"><?php esc_html_e( 'Light', 'chalkboard-menu-pro' ); ?></span>
+							<span class="cmp-theme-toggle-handle"></span>
+							<span class="cmp-theme-toggle-label-dark"><?php esc_html_e( 'Dark', 'chalkboard-menu-pro' ); ?></span>
+						</button>
+					</div>
 				</header>
 
 				<div class="cmp-admin-content">

@@ -25,6 +25,41 @@
   color: #666;
 }
 
+.cmp-admin-header-actions {
+  margin-top: 0.75rem;
+}
+
+.cmp-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cmp-theme-toggle-handle {
+  width: 32px;
+  height: 16px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  position: relative;
+  overflow: hidden;
+}
+
+.cmp-theme-toggle-handle::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #111827;
+  transition: transform 0.18s ease-out;
+}
+
+.cmp-theme-dark .cmp-theme-toggle-handle::before {
+  transform: translateX(16px);
+}
+
 .cmp-admin-content {
   display: grid;
   grid-template-columns: 2.2fr 1fr;
@@ -59,6 +94,11 @@
 
 .cmp-theme-dark .cmp-admin-tagline {
   color: #9ca3af;
+}
+
+.cmp-theme-dark .cmp-admin-panel-primary a,
+.cmp-theme-dark .cmp-admin-panel-secondary a {
+  color: #93c5fd;
 }
 
 @media (max-width: 960px) {
