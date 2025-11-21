@@ -85,6 +85,21 @@ class CMP_Admin {
                 'dashicons-admin-site-alt3',
                 3
             );
+            
+            // Remove the duplicate submenu that WordPress auto-creates
+            remove_submenu_page($parent_slug, $parent_slug);
+            
+            // Add Company Info as first submenu
+            if (class_exists('EZIT_Company_Info')) {
+                add_submenu_page(
+                    $parent_slug,
+                    __('Company Info', 'chalkboard-menu-pro'),
+                    __('Company Info', 'chalkboard-menu-pro'),
+                    'manage_options',
+                    $parent_slug,
+                    ['EZIT_Company_Info', 'render_page']
+                );
+            }
         }
         
         // Always add Chalkboard Menu Pro as submenu under Ez IT Solutions
