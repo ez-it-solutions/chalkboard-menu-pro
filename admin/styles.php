@@ -686,6 +686,27 @@ if (!defined('ABSPATH')) {
     color: #15803d;
 }
 
+.ezit-footer-bottom {
+    border-top: 1px solid rgba(163, 230, 53, 0.2);
+    padding-top: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.ezit-light .ezit-footer-bottom {
+    border-top-color: rgba(22, 163, 74, 0.2);
+}
+
+.ezit-footer-bottom p {
+    color: #9ca3af;
+    font-size: 13px;
+    margin: 0;
+}
+
+.ezit-light .ezit-footer-bottom p {
+    color: #6b7280;
+}
+
 /* Loading Overlay */
 .ezit-loading-overlay {
     position: fixed;

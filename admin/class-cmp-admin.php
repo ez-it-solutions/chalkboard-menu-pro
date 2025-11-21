@@ -229,8 +229,12 @@ class CMP_Admin {
                     <div class="ezit-footer-section">
                         <h4>Quick Links</h4>
                         <p><a href="https://github.com/ez-it-solutions/chalkboard-menu-pro" target="_blank">GitHub Repository</a></p>
+                        <p><a href="<?php echo admin_url('admin.php?page=ez-it-solutions'); ?>">Company Info</a></p>
                         <p><a href="https://www.ez-it-solutions.com/docs/chalkboard-menu-pro" target="_blank">Documentation</a></p>
                     </div>
+                </div>
+                <div class="ezit-footer-bottom">
+                    <p>&copy; <?php echo date('Y'); ?> Ez IT Solutions. All rights reserved.</p>
                 </div>
             </div>
         </div>
@@ -292,6 +296,28 @@ class CMP_Admin {
                     <?php _e('Get Support', 'chalkboard-menu-pro'); ?>
                 </a></li>
             </ul>
+        </div>
+        
+        <!-- Need Help Card -->
+        <div class="ezit-sidebar-card ezit-help-card">
+            <h3>
+                <span class="dashicons dashicons-sos"></span>
+                <?php _e('Need Help?', 'chalkboard-menu-pro'); ?>
+            </h3>
+            <p style="color: #9ca3af; font-size: 13px; line-height: 1.6; margin-bottom: 12px;">
+                <?php _e('Find answers in our documentation', 'chalkboard-menu-pro'); ?>
+            </p>
+            <a href="https://www.ez-it-solutions.com/docs/chalkboard-menu-pro" target="_blank" class="ezit-btn" style="width: 100%; justify-content: center; margin-bottom: 12px;">
+                <span class="dashicons dashicons-book"></span>
+                <?php _e('View Documentation', 'chalkboard-menu-pro'); ?>
+            </a>
+            <p style="color: #9ca3af; font-size: 13px; line-height: 1.6; margin: 12px 0 8px 0;">
+                <?php _e('Or contact Ez IT Solutions support:', 'chalkboard-menu-pro'); ?>
+            </p>
+            <a href="mailto:support@ez-it-solutions.com" class="ezit-sidebar-link" style="display: flex; align-items: center; gap: 8px;">
+                <span class="dashicons dashicons-email"></span>
+                support@ez-it-solutions.com
+            </a>
         </div>
         
         <!-- About Card -->
