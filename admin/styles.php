@@ -118,6 +118,15 @@ if (!defined('ABSPATH')) {
     transition: all 0.2s ease;
 }
 
+.ezit-theme-icon.dashicons-update {
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 .ezit-theme-toggle:hover {
     background: rgba(163, 230, 53, 0.2);
     border-color: rgba(163, 230, 53, 0.5);
@@ -179,6 +188,9 @@ if (!defined('ABSPATH')) {
 .ezit-nav-tab:active {
     color: #a3e635 !important;
     outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-bottom: 3px solid transparent !important;
 }
 
 .ezit-nav-tab-active {
@@ -196,6 +208,9 @@ if (!defined('ABSPATH')) {
 .ezit-light .ezit-nav-tab:active {
     color: #16a34a !important;
     outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-bottom: 3px solid transparent !important;
 }
 
 .ezit-light .ezit-nav-tab-active {
@@ -663,25 +678,27 @@ if (!defined('ABSPATH')) {
 
 .ezit-loading-content {
     background: #1a1f26;
-    padding: 32px 48px;
-    border-radius: 8px;
-    border: 2px solid #a3e635;
+    padding: 48px 64px;
+    border-radius: 12px;
+    border: 3px solid #a3e635;
     text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 .ezit-loading-overlay.ezit-light .ezit-loading-content {
     background: #ffffff;
     border-color: #16a34a;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .ezit-loading-spinner {
-    width: 48px;
-    height: 48px;
-    border: 4px solid rgba(163, 230, 53, 0.2);
+    width: 64px;
+    height: 64px;
+    border: 5px solid rgba(163, 230, 53, 0.2);
     border-top-color: #a3e635;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
-    margin: 0 auto 16px;
+    margin: 0 auto 20px;
 }
 
 @keyframes spin {
@@ -689,13 +706,13 @@ if (!defined('ABSPATH')) {
 }
 
 .ezit-loading-overlay.ezit-light .ezit-loading-spinner {
-    border-color: rgba(22, 163, 74, 0.2);
+    border: 5px solid rgba(22, 163, 74, 0.2);
     border-top-color: #16a34a;
 }
 
 .ezit-loading-text {
     color: #e5e7eb;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
 }
 

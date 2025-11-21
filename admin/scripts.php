@@ -41,8 +41,9 @@ function cmpToggleTheme() {
     var icon = button.find('.ezit-theme-icon');
     var text = button.find('.ezit-theme-text');
     
-    // Store current icon class
+    // Store current icon class and text
     var currentIcon = icon.hasClass('dashicons-moon') ? 'dashicons-moon' : 'dashicons-lightbulb';
+    var currentText = text.text();
     
     // Update button to show switching state
     button.prop('disabled', true).css('opacity', '0.7');
@@ -63,7 +64,7 @@ function cmpToggleTheme() {
             // Restore button on error
             button.prop('disabled', false).css('opacity', '1');
             icon.removeClass('dashicons-update').addClass(currentIcon);
-            text.text(currentIcon === 'dashicons-moon' ? 'Dark Mode' : 'Light Mode');
+            text.text(currentText);
         }
     });
 }
