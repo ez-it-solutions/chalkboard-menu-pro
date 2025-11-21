@@ -306,7 +306,7 @@ class CMP_Admin {
             </h3>
             <p><?php _e('Find answers in our documentation:', 'chalkboard-menu-pro'); ?></p>
             <div style="text-align: center; margin-top: 12px; padding: 10px;">
-                <a href="https://www.ez-it-solutions.com/docs/chalkboard-menu-pro" target="_blank" class="ezit-btn ezit-btn-link ezit-btn-sm ezit-sidebar-doc-btn">
+                <a href="https://www.ez-it-solutions.com/docs/chalkboard-menu-pro" target="_blank" class="ezit-btn ezit-btn-link ezit-btn-sm ezit-sidebar-doc-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; padding: 10px 40px; white-space: nowrap;">
                     <span class="dashicons dashicons-book"></span>
                     <?php _e('View Documentation', 'chalkboard-menu-pro'); ?>
                 </a>

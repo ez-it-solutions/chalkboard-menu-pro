@@ -634,22 +634,36 @@ if (!defined('ABSPATH')) {
     align-items: center;
     gap: 6px;
     padding: 10px 40px;
-    background: #2563eb;
-    color: #ffffff !important;
-    border: 1px solid #2563eb;
+    background: rgba(163, 230, 53, 0.15);
+    color: #a3e635 !important;
+    border: 1px solid rgba(163, 230, 53, 0.4);
     border-radius: 6px;
     font-size: 14px;
     font-weight: 600;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .ezit-sidebar-doc-btn:hover {
-    background: #1d4ed8;
-    border-color: #1d4ed8;
-    color: #ffffff !important;
+    background: rgba(163, 230, 53, 0.25);
+    border-color: rgba(163, 230, 53, 0.6);
+    color: #bef264 !important;
     text-decoration: none;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 4px 12px rgba(163, 230, 53, 0.3);
+}
+
+.ezit-light .ezit-sidebar-doc-btn {
+    background: rgba(22, 163, 74, 0.15);
+    color: #16a34a !important;
+    border-color: rgba(22, 163, 74, 0.4);
+}
+
+.ezit-light .ezit-sidebar-doc-btn:hover {
+    background: rgba(22, 163, 74, 0.25);
+    border-color: rgba(22, 163, 74, 0.6);
+    color: #15803d !important;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
 }
 
 .ezit-sidebar-doc-btn .dashicons {
