@@ -118,6 +118,40 @@ if (!defined('ABSPATH')) {
     transition: all 0.2s ease;
 }
 
+.ezit-theme-icon {
+    font-family: dashicons;
+    display: inline-block;
+    line-height: 1;
+    font-weight: 400;
+    font-style: normal;
+    speak: never;
+    text-decoration: inherit;
+    text-transform: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    vertical-align: top;
+}
+
+.ezit-theme-icon::before {
+    content: "";
+}
+
+.ezit-theme-icon.dashicons-moon::before {
+    content: "\f161";
+}
+
+.ezit-theme-icon.dashicons-lightbulb::before {
+    content: "\f223";
+}
+
+.ezit-theme-icon.dashicons-update::before {
+    content: "\f463";
+}
+
 .ezit-theme-icon.dashicons-update {
     animation: spin 0.8s linear infinite;
 }
@@ -188,9 +222,6 @@ if (!defined('ABSPATH')) {
 .ezit-nav-tab:active {
     color: #a3e635 !important;
     outline: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    border-bottom: 3px solid transparent !important;
 }
 
 .ezit-nav-tab-active {
@@ -208,9 +239,6 @@ if (!defined('ABSPATH')) {
 .ezit-light .ezit-nav-tab:active {
     color: #16a34a !important;
     outline: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    border-bottom: 3px solid transparent !important;
 }
 
 .ezit-light .ezit-nav-tab-active {
