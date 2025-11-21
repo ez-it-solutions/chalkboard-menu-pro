@@ -234,7 +234,7 @@ class CMP_Admin {
                     </div>
                 </div>
                 <div class="ezit-footer-bottom">
-                    &copy; <?php echo date('Y'); ?> Ez IT Solutions. All rights reserved.
+                    <p>&copy; <?php echo date('Y'); ?> Ez IT Solutions. All rights reserved.</p>
                 </div>
             </div>
         </div>
@@ -299,25 +299,25 @@ class CMP_Admin {
         </div>
         
         <!-- Need Help Card -->
-        <div class="ezit-sidebar-card ezit-help-card">
+        <div class="ezit-sidebar-card">
             <h3>
                 <span class="dashicons dashicons-sos"></span>
                 <?php _e('Need Help?', 'chalkboard-menu-pro'); ?>
             </h3>
-            <p style="color: #9ca3af; font-size: 13px; line-height: 1.6; margin-bottom: 12px;">
-                <?php _e('Find answers in our documentation', 'chalkboard-menu-pro'); ?>
-            </p>
-            <a href="https://www.ez-it-solutions.com/docs/chalkboard-menu-pro" target="_blank" class="ezit-help-btn">
-                <span class="dashicons dashicons-book"></span>
-                <?php _e('View Documentation', 'chalkboard-menu-pro'); ?>
-            </a>
-            <p style="color: #9ca3af; font-size: 13px; line-height: 1.6; margin: 12px 0 8px 0;">
-                <?php _e('Or contact Ez IT Solutions support:', 'chalkboard-menu-pro'); ?>
-            </p>
-            <a href="mailto:support@ez-it-solutions.com" class="ezit-sidebar-link" style="display: flex; align-items: center; gap: 8px;">
-                <span class="dashicons dashicons-email"></span>
-                support@ez-it-solutions.com
-            </a>
+            <p><?php _e('Find answers in our documentation:', 'chalkboard-menu-pro'); ?></p>
+            <div style="text-align: center; margin-top: 12px; padding: 10px;">
+                <a href="https://www.ez-it-solutions.com/docs/chalkboard-menu-pro" target="_blank" class="ezit-btn ezit-btn-link ezit-btn-sm ezit-sidebar-doc-btn">
+                    <span class="dashicons dashicons-book"></span>
+                    <?php _e('View Documentation', 'chalkboard-menu-pro'); ?>
+                </a>
+            </div>
+            <p style="margin-top: 16px; text-align: center;"><?php _e('Or contact Ez IT Solutions support:', 'chalkboard-menu-pro'); ?></p>
+            <div style="display: grid; place-items: center;">
+                <a href="mailto:support@ez-it-solutions.com" class="ezit-sidebar-link">
+                    <span class="dashicons dashicons-email"></span>
+                    support@ez-it-solutions.com
+                </a>
+            </div>
         </div>
         
         <!-- About Card -->

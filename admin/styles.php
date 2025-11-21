@@ -627,32 +627,32 @@ if (!defined('ABSPATH')) {
     color: #15803d !important;
 }
 
-/* Help Button */
-.ezit-help-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: #2563eb;
-    color: #ffffff;
+/* Help Button - Sidebar Documentation Button */
+.ezit-sidebar-doc-btn {
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 40px;
+    background: #2563eb;
+    color: #ffffff !important;
+    border: 1px solid #2563eb;
     border-radius: 6px;
     font-size: 14px;
     font-weight: 600;
     transition: all 0.2s ease;
-    margin-bottom: 12px;
 }
 
-.ezit-help-btn:hover {
+.ezit-sidebar-doc-btn:hover {
     background: #1d4ed8;
-    color: #ffffff;
+    border-color: #1d4ed8;
+    color: #ffffff !important;
     text-decoration: none;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
-.ezit-help-btn .dashicons {
+.ezit-sidebar-doc-btn .dashicons {
     font-size: 18px;
     width: 18px;
     height: 18px;
@@ -660,22 +660,24 @@ if (!defined('ABSPATH')) {
 
 /* Footer */
 .ezit-footer {
-    background: #0b0f12;
-    border-top: 2px solid rgba(163, 230, 53, 0.2);
-    padding: 32px;
+    background: #1a1f26;
+    border-top: 2px solid #a3e635;
+    padding: 32px 32px 47px;
     margin-top: auto;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
 
 .ezit-light .ezit-footer {
     background: #ffffff;
-    border-top: 2px solid rgba(22, 163, 74, 0.2);
+    border-top: 2px solid #16a34a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .ezit-footer-content {
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 32px;
 }
 
@@ -683,7 +685,7 @@ if (!defined('ABSPATH')) {
     color: #a3e635;
     font-size: 16px;
     font-weight: 700;
-    margin: 0 0 12px 0;
+    margin: 0 0 16px 0;
 }
 
 .ezit-light .ezit-footer-section h4 {
@@ -691,22 +693,26 @@ if (!defined('ABSPATH')) {
 }
 
 .ezit-footer-section p {
-    color: #9ca3af;
+    color: #ffffff;
     font-size: 14px;
+    line-height: 1.6;
     margin: 8px 0;
 }
 
 .ezit-light .ezit-footer-section p {
-    color: #6b7280;
+    color: #1f2937;
 }
 
 .ezit-footer-section a {
     color: #a3e635;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 8px 0;
     text-decoration: none;
 }
 
 .ezit-footer-section a:hover {
-    color: #bef264;
+    color: #ffffff;
 }
 
 .ezit-light .ezit-footer-section a {
@@ -718,17 +724,18 @@ if (!defined('ABSPATH')) {
 }
 
 .ezit-footer-bottom {
-    border-top: 1px solid rgba(163, 230, 53, 0.2);
-    padding-top: 20px;
-    margin-top: 20px;
+    max-width: 1400px;
+    margin: 24px auto 0;
+    padding: 24px 0;
+    border-top: 1px solid #a3e635;
     text-align: center;
-    color: #9ca3af;
+    color: #ffffff;
     font-size: 13px;
 }
 
 .ezit-light .ezit-footer-bottom {
-    border-top-color: rgba(22, 163, 74, 0.2);
-    color: #6b7280;
+    border-top-color: #16a34a;
+    color: #1f2937;
 }
 
 /* Loading Overlay */
