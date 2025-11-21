@@ -24,6 +24,9 @@ class CMP_Admin {
      * Initialize admin
      */
     public static function init() {
+        // Load dependencies
+        self::load_dependencies();
+        
         // Add admin menu
         add_action('admin_menu', [__CLASS__, 'add_admin_menu']);
         
@@ -35,6 +38,24 @@ class CMP_Admin {
         
         // AJAX handlers
         add_action('wp_ajax_cmp_toggle_theme', [__CLASS__, 'ajax_toggle_theme']);
+    }
+    
+    /**
+     * Load required dependencies
+     */
+    private static function load_dependencies() {
+        // Load tab controller
+        require_once CMP_PLUGIN_DIR . 'admin/class-tab-controller.php';
+        
+        // Load tab files
+        require_once CMP_PLUGIN_DIR . 'admin/tabs/class-tab-dashboard.php';
+        require_once CMP_PLUGIN_DIR . 'admin/tabs/class-tab-boards.php';
+        require_once CMP_PLUGIN_DIR . 'admin/tabs/class-tab-items.php';
+        
+        // Register tabs
+        CMP_Tab_Dashboard::register();
+        CMP_Tab_Boards::register();
+        CMP_Tab_Items::register();
     }
     
     /**
@@ -176,10 +197,13 @@ class CMP_Admin {
                 </div>
             </div>
             
+            <!-- Navigation Tabs -->
+            <?php CMP_Tab_Controller::render_navigation(); ?>
+            
             <!-- Content -->
             <div class="ezit-content">
                 <div class="ezit-main">
-                    <?php self::render_main_content(); ?>
+                    <?php CMP_Tab_Controller::render_content(); ?>
                 </div>
                 
                 <!-- Sidebar -->
@@ -213,90 +237,6 @@ class CMP_Admin {
         // Load inline styles and scripts
         require_once CMP_PLUGIN_DIR . 'admin/styles.php';
         require_once CMP_PLUGIN_DIR . 'admin/scripts.php';
-    }
-    
-    /**
-     * Render main content area
-     */
-    private static function render_main_content() {
-        ?>
-        <h2 class="ezit-page-title"><?php _e('Getting Started', 'chalkboard-menu-pro'); ?></h2>
-        <p class="ezit-description"><?php _e('Create beautiful chalkboard-style menus with drag-and-drop simplicity.', 'chalkboard-menu-pro'); ?></p>
-        
-        <!-- Stats Grid -->
-        <div class="ezit-stats-grid">
-            <div class="ezit-stat-card">
-                <div class="ezit-stat-icon">
-                    <span class="dashicons dashicons-welcome-widgets-menus"></span>
-                </div>
-                <div class="ezit-stat-info">
-                    <div class="ezit-stat-value"><?php echo wp_count_posts('cmp_board')->publish; ?></div>
-                    <div class="ezit-stat-label"><?php _e('Boards', 'chalkboard-menu-pro'); ?></div>
-                </div>
-            </div>
-            
-            <div class="ezit-stat-card">
-                <div class="ezit-stat-icon">
-                    <span class="dashicons dashicons-list-view"></span>
-                </div>
-                <div class="ezit-stat-info">
-                    <div class="ezit-stat-value"><?php echo wp_count_posts('cmp_menu_item')->publish; ?></div>
-                    <div class="ezit-stat-label"><?php _e('Menu Items', 'chalkboard-menu-pro'); ?></div>
-                </div>
-            </div>
-            
-            <div class="ezit-stat-card">
-                <div class="ezit-stat-icon">
-                    <span class="dashicons dashicons-admin-appearance"></span>
-                </div>
-                <div class="ezit-stat-info">
-                    <div class="ezit-stat-value">2</div>
-                    <div class="ezit-stat-label"><?php _e('Frame Styles', 'chalkboard-menu-pro'); ?></div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Quick Start Card -->
-        <div class="ezit-card">
-            <h3>
-                <span class="dashicons dashicons-info"></span>
-                <?php _e('Quick Start Guide', 'chalkboard-menu-pro'); ?>
-            </h3>
-            <ol class="ezit-sidebar-list">
-                <li><?php _e('Create a new Board and add sections with menu items', 'chalkboard-menu-pro'); ?></li>
-                <li><?php _e('Use the shortcode [chalkboard_menu_pro board_id="123"] in any page or post', 'chalkboard-menu-pro'); ?></li>
-                <li><?php _e('Customize the frame style and appearance to match your brand', 'chalkboard-menu-pro'); ?></li>
-                <li><?php _e('Preview your chalkboard menu on the frontend', 'chalkboard-menu-pro'); ?></li>
-            </ol>
-            
-            <div class="ezit-quick-actions">
-                <a href="<?php echo admin_url('post-new.php?post_type=cmp_board'); ?>" class="ezit-action-btn ezit-action-btn-primary">
-                    <span class="dashicons dashicons-plus"></span>
-                    <?php _e('Create New Board', 'chalkboard-menu-pro'); ?>
-                </a>
-                <a href="<?php echo admin_url('post-new.php?post_type=cmp_menu_item'); ?>" class="ezit-action-btn">
-                    <span class="dashicons dashicons-plus"></span>
-                    <?php _e('Add Menu Item', 'chalkboard-menu-pro'); ?>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Features Card -->
-        <div class="ezit-card" style="margin-top: 24px;">
-            <h3>
-                <span class="dashicons dashicons-star-filled"></span>
-                <?php _e('Features', 'chalkboard-menu-pro'); ?>
-            </h3>
-            <ul class="ezit-sidebar-list">
-                <li><?php _e('Multiple chalkboard frame styles (Classic, Minimal)', 'chalkboard-menu-pro'); ?></li>
-                <li><?php _e('Dynamic sections and menu items', 'chalkboard-menu-pro'); ?></li>
-                <li><?php _e('Link menu items to WordPress pages or custom URLs', 'chalkboard-menu-pro'); ?></li>
-                <li><?php _e('Shortcode support for easy embedding', 'chalkboard-menu-pro'); ?></li>
-                <li><?php _e('Light and dark admin modes', 'chalkboard-menu-pro'); ?></li>
-                <li><?php _e('Responsive design for all devices', 'chalkboard-menu-pro'); ?></li>
-            </ul>
-        </div>
-        <?php
     }
     
     /**

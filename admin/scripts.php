@@ -68,6 +68,21 @@ function cmpToggleTheme() {
     });
 }
 
+function cmpLoadTab(event, tab) {
+    event.preventDefault();
+    
+    // Show loading overlay with current theme
+    var isLight = jQuery('.ezit-fullpage').hasClass('ezit-light');
+    var overlay = jQuery('<div class="ezit-loading-overlay ' + (isLight ? 'ezit-light' : '') + '"><div class="ezit-loading-content"><div class="ezit-loading-spinner"></div><div class="ezit-loading-text">Loading...</div></div></div>');
+    jQuery('body').append(overlay);
+    setTimeout(function() {
+        overlay.addClass('active');
+    }, 10);
+    
+    // Navigate to tab
+    window.location.href = '<?php echo admin_url('admin.php?page=chalkboard-menu-pro&tab='); ?>' + tab;
+}
+
 // Show message modal
 function cmpShowMessage(message, type, callback) {
     // Detect current theme
