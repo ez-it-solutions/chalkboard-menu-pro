@@ -1,0 +1,68 @@
+/*
+ * Admin dashboard styles for Chalkboard Menu Pro.
+ *
+ * This file provides a simple base that is intended to align with
+ * existing Ez IT Solutions plugins: a clean card-based layout with
+ * optional light/dark themes. As additional settings screens and
+ * builders are added, these styles can be expanded.
+ */
+
+.cmp-admin-wrap {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+}
+
+.cmp-admin-header {
+  margin-bottom: 1.5rem;
+}
+
+.cmp-admin-header h1 {
+  margin: 0 0 0.25rem;
+}
+
+.cmp-admin-tagline {
+  margin: 0;
+  color: #666;
+}
+
+.cmp-admin-content {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
+  gap: 1.5rem;
+}
+
+.cmp-admin-panel {
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.cmp-admin-panel-secondary {
+  font-size: 0.9rem;
+}
+
+.cmp-admin-steps {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+
+.cmp-admin-steps li {
+  margin: 0.4rem 0;
+}
+
+/* Dark mode base hook; these colors can be tuned to match your existing suite. */
+.cmp-theme-dark .cmp-admin-panel {
+  background: #111827;
+  color: #e5e7eb;
+}
+
+.cmp-theme-dark .cmp-admin-tagline {
+  color: #9ca3af;
+}
+
+@media (max-width: 960px) {
+  .cmp-admin-content {
+    grid-template-columns: 1fr;
+  }
+}

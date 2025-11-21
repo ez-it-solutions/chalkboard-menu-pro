@@ -1,0 +1,53 @@
+/*
+ * Frontend styles for Chalkboard Menu Pro.
+ *
+ * The goal of these base styles is to approximate the sample chalkboard
+ * design using pure CSS: a dark board, serif headings, and column-based
+ * layout. As we iterate, this file will gain additional themes, borders,
+ * and typography controls.
+ */
+
+.cmp-board {
+  position: relative;
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background-color: #111111;
+  color: #f7f5e8;
+  box-shadow: 0 0 0 16px #222, 0 0 0 32px #a17632, 0 0 0 40px #6a4b1b;
+  background-image: radial-gradient(circle at top left, #1a1a1a 0, #050505 60%);
+  border-radius: 4px;
+  font-family: "Georgia", "Times New Roman", serif;
+}
+
+.cmp-board-inner {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem;
+}
+
+.cmp-board-heading {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  text-transform: capitalize;
+  color: #c4cf4d; /* muted olive similar to sample headings */
+}
+
+.cmp-board-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+
+.cmp-board-list li {
+  margin: 0.15rem 0;
+  font-size: 0.98rem;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 768px) {
+  .cmp-board-inner {
+    grid-template-columns: 1fr;
+  }
+}
