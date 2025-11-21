@@ -141,7 +141,7 @@ if (!defined('ABSPATH')) {
 }
 
 .ezit-theme-icon.dashicons-moon::before {
-    content: "\f161";
+    content: "\f319";
 }
 
 .ezit-theme-icon.dashicons-lightbulb::before {
@@ -222,6 +222,7 @@ if (!defined('ABSPATH')) {
 .ezit-nav-tab:active {
     color: #a3e635 !important;
     outline: none !important;
+    box-shadow: none !important;
 }
 
 .ezit-nav-tab-active {
@@ -239,6 +240,7 @@ if (!defined('ABSPATH')) {
 .ezit-light .ezit-nav-tab:active {
     color: #16a34a !important;
     outline: none !important;
+    box-shadow: none !important;
 }
 
 .ezit-light .ezit-nav-tab-active {
