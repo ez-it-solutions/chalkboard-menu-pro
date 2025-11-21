@@ -55,6 +55,7 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 		 */
 		protected function __construct() {
 			$this->define_constants();
+			$this->includes();
 
 			add_action( 'init', array( $this, 'register_post_types' ) );
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
@@ -62,6 +63,13 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_assets' ) );
 			add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
 			add_shortcode( 'chalkboard_menu_pro', array( $this, 'render_chalkboard_menu_shortcode' ) );
+		}
+
+		/**
+		 * Include required files.
+		 */
+		protected function includes() {
+			require_once CMP_PLUGIN_DIR . 'includes/meta-boxes.php';
 		}
 
 		/**
@@ -165,27 +173,65 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 		}
 
 		/**
-		 * Register the top-level admin menu for Chalkboard Menu Pro.
+		 * Register the admin menu for Chalkboard Menu Pro.
+		 *
+		 * If the Ez IT Solutions parent menu exists, attach as submenu.
+		 * Otherwise, create a standalone top-level menu.
 		 */
 		public function register_admin_menu() {
+			global $menu;
+
 			$parent_slug = apply_filters( 'cmp_parent_menu_slug', 'ez-it-solutions' );
+			$parent_exists = false;
 
-			add_submenu_page(
-				$parent_slug,
-				__( 'Chalkboard Menu Pro', 'chalkboard-menu-pro' ),
-				__( 'Chalkboard Menu', 'chalkboard-menu-pro' ),
-				'manage_options',
-				'chalkboard-menu-pro',
-				array( $this, 'render_admin_page' )
-			);
+			// Check if parent menu exists.
+			if ( ! empty( $menu ) ) {
+				foreach ( $menu as $item ) {
+					if ( isset( $item[2] ) && $item[2] === $parent_slug ) {
+						$parent_exists = true;
+						break;
+					}
+				}
+			}
 
-			add_submenu_page(
-				$parent_slug,
-				__( 'Chalkboard Menu Items', 'chalkboard-menu-pro' ),
-				__( 'Menu Items', 'chalkboard-menu-pro' ),
-				'manage_options',
-				'edit.php?post_type=cmp_menu_item'
-			);
+			if ( $parent_exists ) {
+				// Attach as submenu under Ez IT Solutions.
+				add_submenu_page(
+					$parent_slug,
+					__( 'Chalkboard Menu Pro', 'chalkboard-menu-pro' ),
+					__( 'Chalkboard Menu', 'chalkboard-menu-pro' ),
+					'manage_options',
+					'chalkboard-menu-pro',
+					array( $this, 'render_admin_page' )
+				);
+
+				add_submenu_page(
+					$parent_slug,
+					__( 'Chalkboard Menu Items', 'chalkboard-menu-pro' ),
+					__( 'Menu Items', 'chalkboard-menu-pro' ),
+					'manage_options',
+					'edit.php?post_type=cmp_menu_item'
+				);
+			} else {
+				// Create standalone top-level menu.
+				add_menu_page(
+					__( 'Chalkboard Menu Pro', 'chalkboard-menu-pro' ),
+					__( 'Chalkboard Menu', 'chalkboard-menu-pro' ),
+					'manage_options',
+					'chalkboard-menu-pro',
+					array( $this, 'render_admin_page' ),
+					'dashicons-welcome-widgets-menus',
+					60
+				);
+
+				add_submenu_page(
+					'chalkboard-menu-pro',
+					__( 'Chalkboard Menu Items', 'chalkboard-menu-pro' ),
+					__( 'Menu Items', 'chalkboard-menu-pro' ),
+					'manage_options',
+					'edit.php?post_type=cmp_menu_item'
+				);
+			}
 		}
 
 		/**
@@ -232,9 +278,8 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 		/**
 		 * Render the [chalkboard_menu_pro] shortcode output.
 		 *
-		 * For v0.1.0 this is a static layout that visually approximates the
-		 * provided design. Later we will replace the hardcoded data with
-		 * user-configurable menu boards and styles.
+		 * Supports board_id attribute to render a specific board from the database.
+		 * Falls back to demo content if no board_id is provided or board not found.
 		 *
 		 * @param array  $atts    Shortcode attributes.
 		 * @param string $content Enclosed content (unused for now).
@@ -242,75 +287,95 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 		 * @return string
 		 */
 		public function render_chalkboard_menu_shortcode( $atts, $content = '' ) {
+			$atts = shortcode_atts(
+				array(
+					'board_id' => 0,
+					'style'    => 'classic',
+				),
+				$atts,
+				'chalkboard_menu_pro'
+			);
+
 			wp_enqueue_style( 'cmp-frontend' );
+
+			$board_id = absint( $atts['board_id'] );
+			$sections = array();
+
+			// Try to load board from database if board_id is provided.
+			if ( $board_id > 0 ) {
+				$board_post = get_post( $board_id );
+				if ( $board_post && 'cmp_board' === $board_post->post_type ) {
+					$sections = get_post_meta( $board_id, '_cmp_board_sections', true );
+					if ( ! is_array( $sections ) ) {
+						$sections = array();
+					}
+				}
+			}
+
+			// Fallback to demo content if no sections found.
+			if ( empty( $sections ) ) {
+				$sections = $this->get_demo_sections();
+			}
 
 			ob_start();
 			?>
-			<div class="cmp-board cmp-board-style-classic">
+			<div class="cmp-board cmp-board-style-<?php echo esc_attr( $atts['style'] ); ?>">
 				<div class="cmp-board-inner">
-					<div class="cmp-board-column">
-						<h2 class="cmp-board-heading">Espresso</h2>
-						<ul class="cmp-board-list">
-							<li>Latte</li>
-							<li>Mocha</li>
-							<li>Macchiato</li>
-							<li>Cappuccino</li>
-							<li>Americana</li>
-							<li>Kaffe Lis</li>
-						</ul>
-					</div>
-
-					<div class="cmp-board-column">
-						<h2 class="cmp-board-heading">Tea</h2>
-						<ul class="cmp-board-list">
-							<li>Assorted Tea</li>
-							<li>London Fog</li>
-							<li>Chai Latte</li>
-							<li>Matcha Latte</li>
-							<li>Blooming Tea</li>
-						</ul>
-
-						<h2 class="cmp-board-heading">Specialty</h2>
-						<ul class="cmp-board-list">
-							<li>Coffee Frappe</li>
-							<li>Kids Frappe</li>
-							<li>Hot Chocolate</li>
-							<li>Steamer</li>
-							<li>Lemonade</li>
-							<li>Aqua Fresca</li>
-						</ul>
-					</div>
-
-					<div class="cmp-board-column">
-						<h2 class="cmp-board-heading">Coffee</h2>
-						<ul class="cmp-board-list">
-							<li>Drip Coffee</li>
-							<li>Cold Brew</li>
-							<li>French Press</li>
-							<li>Pour Over</li>
-						</ul>
-
-						<h2 class="cmp-board-heading">Smoothies</h2>
-						<ul class="cmp-board-list">
-							<li>Harvest Greens</li>
-							<li>Perfectly Peach</li>
-							<li>Berry Bliss</li>
-							<li>Strawberry Fields</li>
-						</ul>
-
-						<h2 class="cmp-board-heading">Extras</h2>
-						<ul class="cmp-board-list">
-							<li>Extra Shot</li>
-							<li>Non-Dairy</li>
-							<li>Whipped Cream</li>
-							<li>Add Flavor</li>
-						</ul>
-					</div>
+					<?php foreach ( $sections as $section ) : ?>
+						<?php if ( ! empty( $section['title'] ) || ! empty( $section['items'] ) ) : ?>
+							<div class="cmp-board-column">
+								<?php if ( ! empty( $section['title'] ) ) : ?>
+									<h2 class="cmp-board-heading"><?php echo esc_html( $section['title'] ); ?></h2>
+								<?php endif; ?>
+								<?php if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) : ?>
+									<ul class="cmp-board-list">
+										<?php foreach ( $section['items'] as $item ) : ?>
+											<li><?php echo esc_html( $item ); ?></li>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
+							</div>
+						<?php endif; ?>
+					<?php endforeach; ?>
 				</div>
 			</div>
 			<?php
 
 			return ob_get_clean();
+		}
+
+		/**
+		 * Get demo sections for fallback display.
+		 *
+		 * @return array
+		 */
+		protected function get_demo_sections() {
+			return array(
+				array(
+					'title' => 'Espresso',
+					'items' => array( 'Latte', 'Mocha', 'Macchiato', 'Cappuccino', 'Americana', 'Kaffe Lis' ),
+				),
+				array(
+					'title' => 'Tea',
+					'items' => array( 'Assorted Tea', 'London Fog', 'Chai Latte', 'Matcha Latte', 'Blooming Tea' ),
+				),
+				array(
+					'title' => 'Specialty',
+					'items' => array( 'Coffee Frappe', 'Kids Frappe', 'Hot Chocolate', 'Steamer', 'Lemonade', 'Aqua Fresca' ),
+				),
+				array(
+					'title' => 'Coffee',
+					'items' => array( 'Drip Coffee', 'Cold Brew', 'French Press', 'Pour Over' ),
+				),
+				array(
+					'title' => 'Smoothies',
+					'items' => array( 'Harvest Greens', 'Perfectly Peach', 'Berry Bliss', 'Strawberry Fields' ),
+				),
+				array(
+					'title' => 'Extras',
+					'items' => array( 'Extra Shot', 'Non-Dairy', 'Whipped Cream', 'Add Flavor' ),
+				),
+			);
 		}
 	}
 }
