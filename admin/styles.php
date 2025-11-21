@@ -145,7 +145,7 @@ if (!defined('ABSPATH')) {
 }
 
 .ezit-theme-icon.dashicons-lightbulb::before {
-    content: "\f223";
+    content: "\f339";
 }
 
 .ezit-theme-icon.dashicons-update::before {
