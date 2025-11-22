@@ -177,15 +177,14 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 			$atts = shortcode_atts(
 				array(
 					'board_id' => 0,
-					'style'    => 'classic',
+					'template' => '1', // Template number (1, 2, etc.)
 				),
 				$atts,
 				'chalkboard_menu_pro'
 			);
 
-			wp_enqueue_style( 'cmp-frontend' );
-
 			$board_id = absint( $atts['board_id'] );
+			$template = absint( $atts['template'] );
 			$sections = array();
 
 			// Try to load board from database if board_id is provided.
@@ -193,8 +192,12 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 				$board_post = get_post( $board_id );
 				if ( $board_post && 'cmp_board' === $board_post->post_type ) {
 					$sections = get_post_meta( $board_id, '_cmp_board_sections', true );
+					$template = get_post_meta( $board_id, '_cmp_board_template', true );
 					if ( ! is_array( $sections ) ) {
 						$sections = array();
+					}
+					if ( empty( $template ) ) {
+						$template = 1;
 					}
 				}
 			}
@@ -204,54 +207,89 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 				$sections = $this->get_demo_sections();
 			}
 
-			// Split sections into two groups for two-column layout
-			$half = ceil( count( $sections ) / 2 );
-			$left_sections = array_slice( $sections, 0, $half );
-			$right_sections = array_slice( $sections, $half );
+			// Enqueue template-specific stylesheet
+			$template_style_url = CMP_PLUGIN_URL . 'assets/images/boards/' . $template . '/style.css';
+			$template_style_path = CMP_PLUGIN_DIR . 'assets/images/boards/' . $template . '/style.css';
+			
+			if ( file_exists( $template_style_path ) ) {
+				wp_enqueue_style( 'cmp-board-' . $template, $template_style_url, array(), CMP_PLUGIN_VERSION );
+			}
 
+			// Render based on template
 			ob_start();
-			?>
-			<div id="Menu">
-				<div id="MenuBorder">
-					<div id="MenuBackground">
-						<!-- Left Column -->
-						<div id="menu-section">
-							<?php foreach ( $left_sections as $section ) : ?>
-								<?php if ( ! empty( $section['title'] ) || ! empty( $section['items'] ) ) : ?>
-									<ul id="menu-items">
-										<?php if ( ! empty( $section['title'] ) ) : ?>
-											<li><p class="heading"><?php echo esc_html( $section['title'] ); ?></p></li>
-										<?php endif; ?>
-										<?php if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) : ?>
-											<?php foreach ( $section['items'] as $item ) : ?>
-												<li><p><?php echo esc_html( $item ); ?></p></li>
-											<?php endforeach; ?>
-										<?php endif; ?>
-									</ul>
-								<?php endif; ?>
-							<?php endforeach; ?>
-						</div>
-						<!-- Right Column -->
-						<div id="menu-section">
-							<?php foreach ( $right_sections as $section ) : ?>
-								<?php if ( ! empty( $section['title'] ) || ! empty( $section['items'] ) ) : ?>
-									<ul id="menu-items">
-										<?php if ( ! empty( $section['title'] ) ) : ?>
-											<li><p class="heading"><?php echo esc_html( $section['title'] ); ?></p></li>
-										<?php endif; ?>
-										<?php if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) : ?>
-											<?php foreach ( $section['items'] as $item ) : ?>
-												<li><p><?php echo esc_html( $item ); ?></p></li>
-											<?php endforeach; ?>
-										<?php endif; ?>
-									</ul>
-								<?php endif; ?>
-							<?php endforeach; ?>
+			
+			if ( $template == 2 ) {
+				// Template 2: Ornate Frame Design
+				$half = ceil( count( $sections ) / 2 );
+				$left_sections = array_slice( $sections, 0, $half );
+				$right_sections = array_slice( $sections, $half );
+				?>
+				<div class="cmp-board-2">
+					<div class="menu-border">
+						<div class="menu-background">
+							<!-- Left Column -->
+							<div class="menu-section">
+								<?php foreach ( $left_sections as $section ) : ?>
+									<?php if ( ! empty( $section['title'] ) || ! empty( $section['items'] ) ) : ?>
+										<ul class="menu-items">
+											<?php if ( ! empty( $section['title'] ) ) : ?>
+												<li><p class="heading"><?php echo esc_html( $section['title'] ); ?></p></li>
+											<?php endif; ?>
+											<?php if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) : ?>
+												<?php foreach ( $section['items'] as $item ) : ?>
+													<li><p><?php echo esc_html( $item ); ?></p></li>
+												<?php endforeach; ?>
+											<?php endif; ?>
+										</ul>
+									<?php endif; ?>
+								<?php endforeach; ?>
+							</div>
+							<!-- Right Column -->
+							<div class="menu-section">
+								<?php foreach ( $right_sections as $section ) : ?>
+									<?php if ( ! empty( $section['title'] ) || ! empty( $section['items'] ) ) : ?>
+										<ul class="menu-items">
+											<?php if ( ! empty( $section['title'] ) ) : ?>
+												<li><p class="heading"><?php echo esc_html( $section['title'] ); ?></p></li>
+											<?php endif; ?>
+											<?php if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) : ?>
+												<?php foreach ( $section['items'] as $item ) : ?>
+													<li><p><?php echo esc_html( $item ); ?></p></li>
+												<?php endforeach; ?>
+											<?php endif; ?>
+										</ul>
+									<?php endif; ?>
+								<?php endforeach; ?>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<?php
+				<?php
+			} else {
+				// Template 1: Simple Chalkboard (default)
+				?>
+				<div class="cmp-board-1">
+					<div class="cmp-board-inner">
+						<?php foreach ( $sections as $section ) : ?>
+							<?php if ( ! empty( $section['title'] ) || ! empty( $section['items'] ) ) : ?>
+								<div class="cmp-board-column">
+									<?php if ( ! empty( $section['title'] ) ) : ?>
+										<h2 class="cmp-board-heading"><?php echo esc_html( $section['title'] ); ?></h2>
+									<?php endif; ?>
+									<?php if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) : ?>
+										<ul class="cmp-board-list">
+											<?php foreach ( $section['items'] as $item ) : ?>
+												<li><?php echo esc_html( $item ); ?></li>
+											<?php endforeach; ?>
+										</ul>
+									<?php endif; ?>
+								</div>
+							<?php endif; ?>
+						<?php endforeach; ?>
+					</div>
+				</div>
+				<?php
+			}
 
 			return ob_get_clean();
 		}

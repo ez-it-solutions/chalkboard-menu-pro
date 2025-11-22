@@ -1,0 +1,63 @@
+/*
+ * Board Template #1 - Simple Chalkboard
+ * 
+ * Clean, modern chalkboard design with rounded corners
+ * and simple border styling. Perfect for minimalist displays.
+ */
+
+/* Main Menu Container */
+.cmp-board-1 {
+    position: relative;
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background-color: #1a1a1a;
+    color: #f7f5e8;
+    box-shadow: 0 0 0 8px #3a3a3a, 0 0 0 16px #8b7355;
+    background-image: radial-gradient(circle at top left, #2a2a2a 0, #0a0a0a 60%);
+    border-radius: 12px;
+    font-family: "Georgia", "Times New Roman", serif;
+}
+
+/* Board Inner Container */
+.cmp-board-1 .cmp-board-inner {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
+}
+
+/* Section Headings */
+.cmp-board-1 .cmp-board-heading {
+    margin: 0 0 0.75rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    text-transform: capitalize;
+    color: #c4cf4d;
+    font-weight: 600;
+}
+
+/* Menu Items List */
+.cmp-board-1 .cmp-board-list {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+}
+
+.cmp-board-1 .cmp-board-list li {
+    margin: 0.15rem 0;
+    font-size: 0.98rem;
+    letter-spacing: 0.06em;
+    color: #f7f5e8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cmp-board-1 .cmp-board-inner {
+        grid-template-columns: 1fr;
+    }
+    
+    .cmp-board-1 {
+        padding: 1.5rem;
+        margin: 1rem auto;
+    }
+}

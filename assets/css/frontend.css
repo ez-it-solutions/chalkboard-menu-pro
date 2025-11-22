@@ -1,100 +1,26 @@
 /*
  * Frontend styles for Chalkboard Menu Pro.
  *
- * Beautiful ornate frame design with chalkboard background
- * and elegant typography matching the classic menu board aesthetic.
+ * Template-specific styles are now loaded from:
+ * assets/images/boards/{template_number}/style.css
+ *
+ * This file contains only global/shared styles.
  */
 
-/* Main Menu Container */
-#Menu {
-    display: inline-block;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding-top: 50px;
+/* Global Reset for Chalkboard Boards */
+.cmp-board-1,
+.cmp-board-2 {
+    box-sizing: border-box;
 }
 
-/* Ornate Border Frame */
-#MenuBorder {
-    position: relative;
-    border-style: solid;
-    border-width: 100px;
-    border-image-source: url('../images/boards/1/menu-border-small.png');
-    border-image-slice: 116 110 117 111;
-    border-image-repeat: repeat;
+.cmp-board-1 *,
+.cmp-board-2 * {
+    box-sizing: inherit;
 }
 
-/* Chalkboard Background */
-#MenuBackground {
-    z-index: 0;
-    position: relative;
-    flex-wrap: wrap;
-    background-color: rgba(0, 0, 0, 1);
-    padding: 20px;
-}
-
-/* Menu Sections Container */
-#Menu #menu-section {
-    display: flex;
-    padding-top: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-/* Menu Items Column */
-#Menu #menu-items {
-    min-width: 180px;
-    padding: 0px 25px 15px 25px;
-}
-
-#Menu #menu-items li {
-    list-style-type: none;
-    text-align: -webkit-center;
-    display: table;
-    margin: 0px auto 0px auto;
-}
-
-/* Section Headings */
-#Menu .heading {
-    font-size: 30px;
-    padding-bottom: 15px;
-    letter-spacing: 5px;
-    color: #999D15;
-}
-
-/* Menu Item Text */
-#Menu p {
-    text-align: center;
-    width: fit-content;
-    color: #ffffff;
-    padding: 2px 0px;
-    font-size: 18px;
-    letter-spacing: 2px;
-    font-family: "Brilon", "Poppins", sans-serif;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    #MenuBorder {
-        border-width: 50px;
-        border-image-slice: 58 55 59 56;
-    }
-    
-    #Menu #menu-section {
-        flex-direction: column;
-    }
-    
-    #Menu #menu-items {
-        min-width: 100%;
-    }
-    
-    #Menu .heading {
-        font-size: 24px;
-    }
-    
-    #Menu p {
-        font-size: 16px;
-    }
+/* Ensure proper image loading */
+.cmp-board-1 img,
+.cmp-board-2 img {
+    max-width: 100%;
+    height: auto;
 }

@@ -1,0 +1,125 @@
+/*
+ * Board Template #2 - Ornate Frame Chalkboard
+ * 
+ * Elegant ornate frame design with decorative border image.
+ * Features classic chalkboard aesthetic with beautiful typography.
+ */
+
+/* Main Menu Container */
+.cmp-board-2 {
+    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+/* Ornate Border Frame */
+.cmp-board-2 .menu-border {
+    position: relative;
+    border-style: solid;
+    border-width: 100px;
+    border-image-source: url('menu-border-small.png');
+    border-image-slice: 116 110 117 111;
+    border-image-repeat: repeat;
+}
+
+/* Chalkboard Background */
+.cmp-board-2 .menu-background {
+    z-index: 0;
+    position: relative;
+    flex-wrap: wrap;
+    background-color: rgba(0, 0, 0, 1);
+    padding: 20px;
+}
+
+/* Menu Sections Container */
+.cmp-board-2 .menu-section {
+    display: flex;
+    padding-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Menu Items Column */
+.cmp-board-2 .menu-items {
+    min-width: 180px;
+    padding: 0px 25px 15px 25px;
+    list-style-type: none;
+}
+
+.cmp-board-2 .menu-items li {
+    list-style-type: none;
+    text-align: -webkit-center;
+    display: table;
+    margin: 0px auto 0px auto;
+}
+
+/* Section Headings */
+.cmp-board-2 .heading {
+    font-size: 30px;
+    padding-bottom: 15px;
+    letter-spacing: 5px;
+    color: #999D15;
+    text-align: center;
+    width: fit-content;
+    padding: 2px 0px;
+    font-family: "Brilon", "Poppins", sans-serif;
+    font-weight: 600;
+}
+
+/* Menu Item Text */
+.cmp-board-2 .menu-items p {
+    text-align: center;
+    width: fit-content;
+    color: #ffffff;
+    padding: 2px 0px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-family: "Brilon", "Poppins", sans-serif;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cmp-board-2 .menu-border {
+        border-width: 50px;
+        border-image-slice: 58 55 59 56;
+    }
+    
+    .cmp-board-2 .menu-section {
+        flex-direction: column;
+    }
+    
+    .cmp-board-2 .menu-items {
+        min-width: 100%;
+    }
+    
+    .cmp-board-2 .heading {
+        font-size: 24px;
+        letter-spacing: 3px;
+    }
+    
+    .cmp-board-2 .menu-items p {
+        font-size: 16px;
+        letter-spacing: 1.5px;
+    }
+    
+    .cmp-board-2 {
+        padding-top: 20px;
+    }
+}
+
+/* Tablet Adjustments */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .cmp-board-2 .menu-border {
+        border-width: 75px;
+        border-image-slice: 87 83 88 84;
+    }
+    
+    .cmp-board-2 .heading {
+        font-size: 26px;
+    }
+}
