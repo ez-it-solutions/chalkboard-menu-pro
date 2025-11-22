@@ -1,53 +1,100 @@
 /*
  * Frontend styles for Chalkboard Menu Pro.
  *
- * The goal of these base styles is to approximate the sample chalkboard
- * design using pure CSS: a dark board, serif headings, and column-based
- * layout. As we iterate, this file will gain additional themes, borders,
- * and typography controls.
+ * Beautiful ornate frame design with chalkboard background
+ * and elegant typography matching the classic menu board aesthetic.
  */
 
-.cmp-board {
-  position: relative;
-  max-width: 960px;
-  margin: 2rem auto;
-  padding: 2.5rem;
-  background-color: #111111;
-  color: #f7f5e8;
-  box-shadow: 0 0 0 16px #222, 0 0 0 32px #a17632, 0 0 0 40px #6a4b1b;
-  background-image: radial-gradient(circle at top left, #1a1a1a 0, #050505 60%);
-  border-radius: 4px;
-  font-family: "Georgia", "Times New Roman", serif;
+/* Main Menu Container */
+#Menu {
+    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
 }
 
-.cmp-board-inner {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2.5rem;
+/* Ornate Border Frame */
+#MenuBorder {
+    position: relative;
+    border-style: solid;
+    border-width: 100px;
+    border-image-source: url('../images/boards/1/menu-border-small.png');
+    border-image-slice: 116 110 117 111;
+    border-image-repeat: repeat;
 }
 
-.cmp-board-heading {
-  margin: 0 0 0.75rem;
-  font-size: 1.5rem;
-  letter-spacing: 0.08em;
-  text-transform: capitalize;
-  color: #c4cf4d; /* muted olive similar to sample headings */
+/* Chalkboard Background */
+#MenuBackground {
+    z-index: 0;
+    position: relative;
+    flex-wrap: wrap;
+    background-color: rgba(0, 0, 0, 1);
+    padding: 20px;
 }
 
-.cmp-board-list {
-  list-style: none;
-  margin: 0 0 1.5rem;
-  padding: 0;
+/* Menu Sections Container */
+#Menu #menu-section {
+    display: flex;
+    padding-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.cmp-board-list li {
-  margin: 0.15rem 0;
-  font-size: 0.98rem;
-  letter-spacing: 0.06em;
+/* Menu Items Column */
+#Menu #menu-items {
+    min-width: 180px;
+    padding: 0px 25px 15px 25px;
 }
 
+#Menu #menu-items li {
+    list-style-type: none;
+    text-align: -webkit-center;
+    display: table;
+    margin: 0px auto 0px auto;
+}
+
+/* Section Headings */
+#Menu .heading {
+    font-size: 30px;
+    padding-bottom: 15px;
+    letter-spacing: 5px;
+    color: #999D15;
+}
+
+/* Menu Item Text */
+#Menu p {
+    text-align: center;
+    width: fit-content;
+    color: #ffffff;
+    padding: 2px 0px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-family: "Brilon", "Poppins", sans-serif;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .cmp-board-inner {
-    grid-template-columns: 1fr;
-  }
+    #MenuBorder {
+        border-width: 50px;
+        border-image-slice: 58 55 59 56;
+    }
+    
+    #Menu #menu-section {
+        flex-direction: column;
+    }
+    
+    #Menu #menu-items {
+        min-width: 100%;
+    }
+    
+    #Menu .heading {
+        font-size: 24px;
+    }
+    
+    #Menu p {
+        font-size: 16px;
+    }
 }

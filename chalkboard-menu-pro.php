@@ -204,26 +204,51 @@ if ( ! class_exists( 'Chalkboard_Menu_Pro' ) ) {
 				$sections = $this->get_demo_sections();
 			}
 
+			// Split sections into two groups for two-column layout
+			$half = ceil( count( $sections ) / 2 );
+			$left_sections = array_slice( $sections, 0, $half );
+			$right_sections = array_slice( $sections, $half );
+
 			ob_start();
 			?>
-			<div class="cmp-board cmp-board-style-<?php echo esc_attr( $atts['style'] ); ?>">
-				<div class="cmp-board-inner">
-					<?php foreach ( $sections as $section ) : ?>
-						<?php if ( ! empty( $section['title'] ) || ! empty( $section['items'] ) ) : ?>
-							<div class="cmp-board-column">
-								<?php if ( ! empty( $section['title'] ) ) : ?>
-									<h2 class="cmp-board-heading"><?php echo esc_html( $section['title'] ); ?></h2>
-								<?php endif; ?>
-								<?php if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) : ?>
-									<ul class="cmp-board-list">
-										<?php foreach ( $section['items'] as $item ) : ?>
-											<li><?php echo esc_html( $item ); ?></li>
-										<?php endforeach; ?>
+			<div id="Menu">
+				<div id="MenuBorder">
+					<div id="MenuBackground">
+						<!-- Left Column -->
+						<div id="menu-section">
+							<?php foreach ( $left_sections as $section ) : ?>
+								<?php if ( ! empty( $section['title'] ) || ! empty( $section['items'] ) ) : ?>
+									<ul id="menu-items">
+										<?php if ( ! empty( $section['title'] ) ) : ?>
+											<li><p class="heading"><?php echo esc_html( $section['title'] ); ?></p></li>
+										<?php endif; ?>
+										<?php if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) : ?>
+											<?php foreach ( $section['items'] as $item ) : ?>
+												<li><p><?php echo esc_html( $item ); ?></p></li>
+											<?php endforeach; ?>
+										<?php endif; ?>
 									</ul>
 								<?php endif; ?>
-							</div>
-						<?php endif; ?>
-					<?php endforeach; ?>
+							<?php endforeach; ?>
+						</div>
+						<!-- Right Column -->
+						<div id="menu-section">
+							<?php foreach ( $right_sections as $section ) : ?>
+								<?php if ( ! empty( $section['title'] ) || ! empty( $section['items'] ) ) : ?>
+									<ul id="menu-items">
+										<?php if ( ! empty( $section['title'] ) ) : ?>
+											<li><p class="heading"><?php echo esc_html( $section['title'] ); ?></p></li>
+										<?php endif; ?>
+										<?php if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) : ?>
+											<?php foreach ( $section['items'] as $item ) : ?>
+												<li><p><?php echo esc_html( $item ); ?></p></li>
+											<?php endforeach; ?>
+										<?php endif; ?>
+									</ul>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</div>
+					</div>
 				</div>
 			</div>
 			<?php
